@@ -41,15 +41,18 @@ class Actor extends Component {
     const {name, scenes} = this.props.data
     return (
       <div style={style}>
-        {this.state.absent && <button className='btn btn-sm btn-warning' onClick={this.handleToggle}>Absent</button>}
-        {!this.state.absent && <button className='btn btn-sm btn-success' onClick={this.handleToggle}>Present</button>}
-        <strong>{name}</strong> is
-          {this.state.absent && ' absent and that is sad'}
-        {!this.state.absent && ' present and ready to rock'}
+        {this.state.absent &&
+          <button type='button' className='btn btn-sm btn-warning' onClick={this.handleToggle}>Absent</button>}
+        {!this.state.absent && <button type='button' className='btn btn-sm btn-success' onClick={this.handleToggle}>Present</button>}
+        <strong style={style.padLeft}>{name}</strong> is
+          {this.state.absent &&
+            ' absent and that is sad'}
+          {!this.state.absent &&
+            ' present and ready to rock'}
         <span style={style.padLeft}>
-          {!this.state.absent && <button className='btn btn-sm btn-outline-info' onClick={this.toggleScenes}>View Scenes</button>}
-          {this.state.absent && <button className='btn btn-sm btn-danger' onClick={this.toggleScenes}>View Scenes</button>}</span>
-        <div className='sceneList'>{this.state.showScenes && scenes.map(scene => (<li>{scene}</li>))}</div>
+          {!this.state.absent && <button type='button' className='btn btn-sm btn-outline-info' onClick={this.toggleScenes}>View Scenes</button>}
+          {this.state.absent && <button type='button' className='btn btn-sm btn-danger' onClick={this.toggleScenes}>View Scenes</button>}</span>
+        <div className='sceneList'>{this.state.showScenes && scenes.map((scene, i) => (<li key={i}>{scene}</li>))}</div>
       </div>
     )
   }
