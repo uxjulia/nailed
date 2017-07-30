@@ -23,12 +23,13 @@ class Actor extends Component {
   }
 
   updateList () {
-    const {scenes} = this.props.data
+    const { scenes } = this.props.data
+    const { appState } = this.props
     if (this.state.absent) {
-      this.props.handleAdd(scenes)
+      appState.handleAdd(scenes)
     }
     if (!this.state.absent) {
-      this.props.handleRemove(scenes)
+      appState.handleRemove(scenes)
     }
   }
   render () {
@@ -38,22 +39,24 @@ class Actor extends Component {
         paddingLeft: '5px'
       }
     }
-    const {name, scenes} = this.props.data
+    const {firstName, lastName, scenes} = this.props.data
     return (
-      <div style={style}>
-        {this.state.absent &&
-          <button type='button' className='btn btn-sm btn-warning' onClick={this.handleToggle}>Absent</button>}
-        {!this.state.absent && <button type='button' className='btn btn-sm btn-success' onClick={this.handleToggle}>Present</button>}
-        <strong style={style.padLeft}>{name}</strong> is
-          {this.state.absent &&
-            ' absent and that is sad'}
-          {!this.state.absent &&
-            ' present and ready to rock'}
-        <span style={style.padLeft}>
-          {!this.state.absent && <button type='button' className='btn btn-sm btn-outline-info' onClick={this.toggleScenes}>View Scenes</button>}
-          {this.state.absent && <button type='button' className='btn btn-sm btn-danger' onClick={this.toggleScenes}>View Scenes</button>}</span>
-        <div className='sceneList'>{this.state.showScenes && scenes.map((scene, i) => (<li key={i}>{scene}</li>))}</div>
-      </div>
+      <tr>
+        <td>
+          {this.state.absent && <button type='button' className='btn btn-sm btn-warning' onClick={this.handleToggle}>Absent</button>}
+          {!this.state.absent && <button type='button' className='btn btn-sm btn-success' onClick={this.handleToggle}>Present</button>}
+        </td>
+        <td>
+          <strong style={style.padLeft}>{firstName} {lastName}</strong> is
+            {this.state.absent && ' absent and that is sad'}
+            {!this.state.absent && ' present and ready to rock'}
+            {this.state.showScenes && scenes.map((scene) => (<li style={style.padLeft} key={scene.id}>{scene.name}</li>))}
+        </td>
+        <td>
+          {!this.state.absent && <button type='button' className='btn btn-sm btn-outline-info' onClick={this.toggleScenes}>View {scenes.length} Scene{scenes.length > 1 && 's'}</button>}
+          {this.state.absent && <button type='button' className='btn btn-sm btn-danger' onClick={this.toggleScenes}>View {scenes.length} Scene{scenes.length > 1 && 's'}</button>}
+        </td>
+      </tr>
     )
   }
 }

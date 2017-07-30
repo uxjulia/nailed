@@ -2,11 +2,14 @@ import React from 'react'
 import Actor from './Actor'
 
 const ActorList = ({data, ...props}) => {
-    const uiRender = []
-    data.forEach((actor) => (uiRender.push(<Actor key={actor.id} {...props} data={actor} />)))
     return(
-      <div>{uiRender}</div>
+      <table className='table table-sm table-bordered table-responsive'>
+        <tbody>
+        { data.map(actor => (<Actor key={actor.id} {...props} data={actor} />)) }
+        </tbody>
+      </table>
     )
   }
 
 export default ActorList
+
