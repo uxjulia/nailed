@@ -1,38 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import React, {Component} from 'react'
 import AttendanceContainer from './Containers/AttendanceContainer'
+import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo'
+import AppState from './Stores/AppState'
 
-const actors = [
-  {id: 1, name: 'Cersei Lannister', scenes: ['Shame', 'Red Wedding']},
-  {id: 2, name: 'Daenarys Targaryan', scenes: ['Mother of Dragons', 'The Narrow Sea']},
-  {id: 3, name: 'Arya Stark', scenes: ['The Mountain', 'The North Remembers']},
-  {id: 4, name: 'Robb Stark', scenes: ['Red Wedding', 'Early Grave']},
-  {id: 5, name: 'Jon Snow', scenes: ['White Walkers', 'The Wall']}
-]
+const appState = AppState
 
-const scenes = [
-  'Red Wedding',
-  'White Walkers',
-  'Shame',
-  'Mother of Dragons',
-  'The North Remembers',
-  'The Mountain',
-  'The Wall',
-  'Early Grave',
-  'The Narrow Sea'
-]
+const networkInterface = createNetworkInterface({
+  uri: 'https://api.graph.cool/simple/v1/cj5pk389ha1hk0160sm5rtf25'
+})
 
-const data = {
-  actors: actors,
-  scenes: scenes
-}
+const client = new ApolloClient({
+  networkInterface: networkInterface
+})
 
 class App extends Component {
   render () {
     return (
-      <div className='App'>
-        <AttendanceContainer data={data} />
-      </div>
+      <ApolloProvider client={client}>
+        <div className='App'>
+          <AttendanceContainer appState={appState}/>
+        </div>
+      </ApolloProvider>
     )
   }
 }
